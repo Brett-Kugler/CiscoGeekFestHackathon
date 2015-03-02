@@ -17,10 +17,10 @@ class NetBlock:
         podHosts = []
         podSwitch = None
         for i in range(1,4):
-            self.addHost(addressBase + i)
+            self.addHost(name, addressBase + i)
             self.createPodSwitch()
 
-    def addHost(self, i):
+    def addHost(self, name, i):
         hostName = 'host' + name + i
         ipAddress = '10.0.0.' + i
         podHosts.append(net.addHost(hostName, ip=ipAddress))
