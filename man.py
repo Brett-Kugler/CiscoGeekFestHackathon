@@ -10,12 +10,13 @@ from mininet.topo import Topo
 from mininet.net import Controller
 from mininet.net import Mininet
 from mininet.cli import CLI
+from mininet.node import OVSController
 
 class NetBlock:
 
     def __init__(self, name, addressBase, network):
-        podHosts = []
-        podSwitch = None
+        self.podHosts = []
+        self.podSwitch = None
         for i in range(1,4):
             self.addHost(name, addressBase + i)
             self.createPodSwitch()
@@ -23,12 +24,12 @@ class NetBlock:
     def addHost(self, name, i):
         hostName = 'host' + name + str(i)
         ipAddress = '10.0.0.' + str(i)
-        podHosts.append(net.addHost(hostName, ip=ipAddress))
+        self.podHosts.append(net.addHost(hostName, ip=ipAddress))
 
     def createPodSwitch(self):
-        podSwitch = net.addSwitch( 's3' )
-        for host in self.posHosts:
-            net.addLink( host, podSwitch )
+        self.podSwitch = net.addSwitch( 's3' )
+        for host in self.podHosts:
+            net.addLink( host, self.podSwitch )
 
 
 def buildMainNetwork():
@@ -46,15 +47,16 @@ def buildMainNetwork():
 
 if __name__ == "__main__":
     # network = Mininet()
-    net = Mininet(controller=Controller)
+    net = Mininet(controller=OVSController)
 
     print '*** Adding controller\n'
     net.addController( 'c0' )
-    block1 = NetBlock('block1', 10, net)
     buildMainNetwork()
 
     print '*** Starting network\n'
     net.start()
+    
+    block1 = NetBlock('block1', 10, net)
 
     print '*** Running CLI\n'
     CLI( net )
