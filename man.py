@@ -16,7 +16,7 @@ class NetBlock:
     def __init__(self, name, addressBase, network):
         podHosts = []
         podSwitch = None
-        for i in Range(1,4):
+        for i in range(1,4):
             self.addHost(addressBase + i)
             self.createPodSwitch()
 
