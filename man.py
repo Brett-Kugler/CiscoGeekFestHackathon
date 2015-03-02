@@ -13,23 +13,25 @@ from mininet.cli import CLI
 
 class NetBlock:
 
-    def __init__():
+    def __init__(self, name, addressBase, network):
         podHosts = []
+        podSwitch = None
+        for i in Range(1,4):
+            self.addHost(addressBase + i)
+            self.createPodSwitch()
 
-    def addHost():
-        pass
+    def addHost(self, i):
+        hostName = 'host' + name + i
+        ipAddress = '10.0.0.' + i
+        podHosts.append(net.addHost(hostName, ip=ipAddress))
 
-    def createPodSwitch():
-        pass
+    def createPodSwitch(self):
+        podSwitch = net.addSwitch( 's3' )
+        for host in self.posHosts:
+            net.addLink( host, podSwitch )
 
 
-if __name__ == "__main__":
-    #network = Mininet()
-    net = Mininet( controller=Controller )
-
-    print '*** Adding controller\n'
-    net.addController( 'c0' )
-
+def buildMainNetwork():
     print '*** Adding hosts\n'
     h1 = net.addHost( 'h1', ip='10.0.0.1' )
     h2 = net.addHost( 'h2', ip='10.0.0.2' )
@@ -40,6 +42,16 @@ if __name__ == "__main__":
     print '*** Creating links\n'
     net.addLink( h1, s3 )
     net.addLink( h2, s3 )
+
+
+if __name__ == "__main__":
+    # network = Mininet()
+    net = Mininet(controller=Controller)
+
+    print '*** Adding controller\n'
+    net.addController( 'c0' )
+    block1 = NetBlock('block1', 10, net)
+    buildMainNetwork()
 
     print '*** Starting network\n'
     net.start()
