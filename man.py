@@ -21,8 +21,8 @@ class NetBlock:
             self.createPodSwitch()
 
     def addHost(self, name, i):
-        hostName = 'host' + name + i
-        ipAddress = '10.0.0.' + i
+        hostName = 'host' + name + str(i)
+        ipAddress = '10.0.0.' + str(i)
         podHosts.append(net.addHost(hostName, ip=ipAddress))
 
     def createPodSwitch(self):
