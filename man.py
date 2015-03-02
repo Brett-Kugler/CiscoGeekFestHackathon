@@ -7,6 +7,7 @@
 
 import requests
 from mininet.topo import Topo
+from mininet.net import Controller
 from mininet.net import Mininet
 
 class NetBlock:
