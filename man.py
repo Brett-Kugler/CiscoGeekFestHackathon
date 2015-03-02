@@ -9,6 +9,7 @@ import requests
 from mininet.topo import Topo
 from mininet.net import Controller
 from mininet.net import Mininet
+from mininet.cli import CLI
 
 class NetBlock:
 
@@ -26,25 +27,25 @@ if __name__ == "__main__":
     #network = Mininet()
     net = Mininet( controller=Controller )
 
-    info( '*** Adding controller\n' )
+    print '*** Adding controller\n'
     net.addController( 'c0' )
 
-    info( '*** Adding hosts\n' )
+    print '*** Adding hosts\n'
     h1 = net.addHost( 'h1', ip='10.0.0.1' )
     h2 = net.addHost( 'h2', ip='10.0.0.2' )
 
-    info( '*** Adding switch\n' )
+    print '*** Adding switch\n'
     s3 = net.addSwitch( 's3' )
 
-    info( '*** Creating links\n' )
+    print '*** Creating links\n'
     net.addLink( h1, s3 )
     net.addLink( h2, s3 )
 
-    info( '*** Starting network\n')
+    print '*** Starting network\n'
     net.start()
 
-    info( '*** Running CLI\n' )
+    print '*** Running CLI\n'
     CLI( net )
 
-    info( '*** Stopping network' )
+    print '*** Stopping network'
     net.stop()
